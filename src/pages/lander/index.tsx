@@ -34,7 +34,11 @@ const Lander = () => {
   const [applicationContext, setApplicationContext] = useState(defaultApplcationContext);
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   const [myClaims, setMyClaims] = useState(false);
-  const { isConnected, isConnecting, walletAddress } = useSelector((state: RootState) => state.walletConnector);
+  const { isConnecting } = useSelector((state: RootState) => state.walletConnector);
+  const isConnected  =
+    useSelector((state: RootState) => state.mainAppContract.walletIsConnected);
+    const walletAddress  =
+    useSelector((state: RootState) => state.mainAppContract.accountWalletAddress);
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [isAllowedNetwork, setIsAllowedNetwork] = useState(false);
   const [metamaskChainId, setMetamaskChainId] = useState(-1);

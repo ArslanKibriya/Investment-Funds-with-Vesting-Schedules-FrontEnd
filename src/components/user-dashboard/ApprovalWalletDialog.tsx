@@ -57,7 +57,7 @@ export const ApprovalWalletDialog = ({
     width: window.innerWidth,
     height: window.innerHeight,
   });
-  const { networkClient, walletAddress, currentWalletNetwork, currentWallet } = useSelector((state: RootState) => state.walletConnector);
+  const { networkClient, currentWalletNetwork, currentWallet } = useSelector((state: RootState) => state.walletConnector);
   const [approvalCross, setApprovalCross] = useState(false);
   const [txId, setTxid] = useState('')
   const [metamaskSymbol, setMetamaskSymbol] = useState('')

@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FDialog, FGridItem } from "ferrum-design-system";
-import { WalletConnector } from "foundry";
-import { ConnectWalletDialog } from "../connect-wallet/ConnectWalletDialog";
-import { FButton } from "../ferrum-design-system/Fbutton/Fbutton";
-import chibiLogo from '../../assets/img/chibidinos-logo.svg'
-import { connectWallet } from "foundry/dist/container-components/wallet-connector/redux/walletConnectorActions";
-import { connect, useSelector } from "react-redux";
-import { ConnectWalletList } from "../connect-wallet/ConnectList";
-import { signInUser, getAllNetworksAllowedOnVesting } from '../../_apis/vesting'
+import { FGridItem, FList, FListItem } from "ferrum-design-system";
+import {  useDispatch, useSelector } from "react-redux";
+import {  getAllNetworksAllowedOnVesting } from '../../_apis/vesting'
 import { RootState } from "../../redux/rootReducer";
-import ferrumlogo from "../../assets/img/ferrum-logo.svg";
 import { ferrumNetworkIdentifier } from "../../utils/const.utils";
-
+import IconMetaMask from "../../assets/img/icon-metamask.svg";
+import Web3 from "web3";
+import { setWalletAddress, setwalletStatus } from "../../redux/app-contract/appContractActions";
 export const ConnectWalletDialogStart = ({
   show,
   onHide,
@@ -20,9 +15,36 @@ export const ConnectWalletDialogStart = ({
 }: any) => {
   const mainContractAddress = useSelector((state: RootState) => state.mainAppContract.mainContract);
   const [networkShow, setNetworkshow] = useState(false)
-
+  const isConnected  =
+  useSelector((state: RootState) => state.mainAppContract.walletIsConnected);
+  const dispatch = useDispatch();
+   async function connectWallet() {
+      const web3 = new Web3(window.ethereum);
+       try {
+           if (!window.ethereum) {
+               alert("Please Install the wallet")
+           }
+           else
+               await window.ethereum.enable();
+           let accounts = await web3.eth.getAccounts()
+           dispatch(
+              setWalletAddress(accounts[0])
+               
+           );
+           // chainId = await web3.eth.getChainId()
+           let isconnected = await window.ethereum.isConnected();
+                   if (isconnected) {
+                       dispatch(
+                          setwalletStatus(isconnected)
+                           
+                       );
+                       
+                   }
+       } catch (error) {
+           console.log(error);
+       }
+  } 
   useEffect(() => {
-
     getAllNetworksAllowedOnVesting(ferrumNetworkIdentifier, 0, 10)
       .then((response: any) => {
         console.log('networks reponse:', response)
@@ -49,24 +71,24 @@ export const ConnectWalletDialogStart = ({
         alignY={"center"}
         className={"f-mt-2"}
       >
-        <img src={ferrumlogo} alt={ferrumlogo} height="36px" width="289px"></img>
       </FGridItem>
       <FGridItem
         alignX={"center"}>
         <p className="f-mt-2 f-mb-2 custom-font-size-16 font-400 connect-wallet">Please connect your wallet on <br />{networkShow} network to continue</p>
       </FGridItem>
-      <WalletConnector.WalletConnector
-        WalletConnectView={FButton}
-        WalletConnectModal={ConnectWalletList}
-        WalletConnectViewProps={{
-          className: "mt-3 w-100 f-mb-4 custom-font-size-14 font-700 connect-button-hide",//hide the connect btn
-          variant: "whiteLabeled"
-        }}
-      />
+      <div className="dialog-connect-wallet text-center">
+            {/* custom-padding-11 */}
+            < FList display="block" type="number" variant="connect-wallet" >
+                {/* <p className={'text_left custom-font-size-20 c-mb-24 font-400'}>Select Wallet</p> */}
+                <FListItem display="flex" onClick={async () => { await connectWallet() }} className={'whiteLabeledListItem c-mb-50  cursor_pointer'}>
+                    <p className={'text_left custom-font-size-24 clr_black_new font-700'}>{ isConnected?"Disconnect": 'MetaMask'}</p>
+                    <span className="icon-wrap">
+                        <img src={IconMetaMask} alt={IconMetaMask}></img>
+                    </span>
+                </FListItem>
+            </FList >
+        </div>
     </div>
   );
 };
-function check(check: any) {
-  throw new Error("Function not implemented.");
-}
 

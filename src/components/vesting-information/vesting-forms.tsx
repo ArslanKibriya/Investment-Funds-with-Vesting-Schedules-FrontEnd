@@ -59,7 +59,9 @@ const VestingForm = () => {
     const [safeTxId, setSafeTxId] = useState<any>('');
     //
     const hiddenFileInput: any = useRef(null);
-    const { networkClient, walletAddress, currentWalletNetwork, currentWallet } = useSelector((state: RootState) => state.walletConnector);
+    const { networkClient, currentWalletNetwork, currentWallet } = useSelector((state: RootState) => state.walletConnector);
+    const walletAddress  =
+    useSelector((state: RootState) => state.mainAppContract.accountWalletAddress);
     var signature = "";
     var key = "";
 

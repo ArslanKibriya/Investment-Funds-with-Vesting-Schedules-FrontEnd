@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, Dispatch } from "@reduxjs/toolkit";
 import { APP_CONTRACT_STATE, defaultAppContractState } from "./appContractInterfaces";
 
 const initialApplicationState: APP_CONTRACT_STATE = {
@@ -15,7 +15,13 @@ export const appContractSlice = createSlice({
     userAuthToken: (state, action) => {
       state.userToken = action.payload.userToken
     },
-
+    setWalletIsConnected(state, action) {
+      state.walletIsConnected = action.payload.walletIsConnected;
+    },
+    
+    setAccountWalletAddress(state, action) {
+      state.accountWalletAddress = action.payload.accountWalletAddress;
+    },
 
   },
 });

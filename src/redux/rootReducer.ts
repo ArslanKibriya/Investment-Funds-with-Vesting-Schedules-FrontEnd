@@ -6,6 +6,9 @@ import { WalletConnector, WalletApplicationWrapper, WalletApproverWrapper, Walle
 import { applicationConfigSlice } from "./application-config/applicationConfigSlice";
 import { appContractSlice } from "./app-contract/appContractSlice";
 import { walletConnectorSlice } from "foundry/dist/container-components/wallet-connector/redux/walletConnectorSlice";
+import { connectWallet } from "foundry/dist/container-components/wallet-connector/redux/walletConnectorActions";
+import { createSlice } from "@reduxjs/toolkit";
+import { connectslice } from "../utils/connectWallet";
 
 const walletConnectorPersistConfig = {
   key: "walletConnector",
@@ -23,7 +26,11 @@ const appContractPersistConfig = {
   key: "mainAppContract",
   storage: localStorage,
 };
-
+const walletPersisttConfig = {
+  key: "connect",
+  storage: storageSession,
+  whitelist: ["selectedWallet"],
+};
 const rootReducer = combineReducers({
   walletConnector: persistReducer(
     walletConnectorPersistConfig,
@@ -38,7 +45,11 @@ const rootReducer = combineReducers({
   walletApprovalWrapper: WalletApproverWrapper.walletApproverWrapperSlice.reducer,
   walletSwapWrapper: WalletSwap.walletSwapperSlice.reducer,
   mainAppContract: persistReducer(appContractPersistConfig, appContractSlice.reducer),
+  connect: persistReducer(walletPersisttConfig, appContractSlice.reducer),
+  connectwallet: persistReducer(walletPersisttConfig, connectslice.reducer),
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;
+
+

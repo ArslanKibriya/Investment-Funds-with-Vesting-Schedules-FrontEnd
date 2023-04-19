@@ -23,7 +23,9 @@ const SeedRoundCard = ({ isConnected, pool, claimCliffToken, claimNonCliffToken,
     pool.totalAllocation = 0;
     pool.totalClaimable = 0;
     pool.totalClaimed = 0;
-    const { walletAddress, networkClient, currentWallet } = useSelector((state: RootState) => state.walletConnector);
+    const { networkClient, currentWallet } = useSelector((state: RootState) => state.walletConnector);
+    const walletAddress  =
+    useSelector((state: RootState) => state.mainAppContract.accountWalletAddress);
     var poolObject = { 'pool': pool, 'cliffClaimable': 0, 'nonCliffClaimable': 0, 'vestingClaimable': 0, 'cliffAllocation': 0, 'nonCliffAllocation': 0, 'vestingAllocation': 0, 'cliffClaimed': 0, 'nonCliffClaimed': 0, 'vestingClaimed': 0, 'totalClaimed': 0, 'totalAllocation': 0, 'totalClaimable': 0 }
     const [poolDataLoaded, setPoolDataLoaded] = useState<any>(pool);
     const [checkVest, setCheckVest] = useState(false)

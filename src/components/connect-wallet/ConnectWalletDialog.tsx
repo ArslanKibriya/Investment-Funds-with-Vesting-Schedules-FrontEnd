@@ -6,37 +6,43 @@ import IconWalletConnect from "../../assets/img/icon-wallet-connect.svg";
 import { FCard, FItem, FList, FListItem } from "ferrum-design-system";
 import "./ConnectWalletDialog-styles.scss";
 import { FDialog } from "../ferrum-design-system/Fdialog/Fdialog";
-
+import { setWalletAddress, setwalletStatus } from "../../redux/app-contract/appContractActions";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/rootReducer";
+import Web3 from "web3";
 export const ConnectWalletDialog = ({
   show,
-  onHide,
-  metaMaskClickEvent,
-  walletConnectClickEvent,
 }: any) => {
-
+  const dispatch = useDispatch();
+  const isConnected  =
+    useSelector((state: RootState) => state.mainAppContract.walletIsConnected);
   return (
     <FDialog
       show={show}
-      onHide={onHide}
       size="small"
       showClose={false}
       variant={'new-purple-popup'}
       className="dialog-connect-wallet text-center"
     >
       {/* custom-padding-11 */}
-      <FList display="block" type="number" variant="connect-wallet">
-        <p className={'text_left custom-font-size-20 c-mb-24 font-400 connect-wallet-select-m'}>Select Wallet</p>
-        <FListItem display="flex" onClick={metaMaskClickEvent} className={'whiteLabeledListItem c-mb-50 cursor_pointer'}>
-          <p className={'text_left custom-font-size-24 clr_black_new font-700'}>MetaMask</p>
+      <FList display="block" type="number" variant="connect-wallet" >
+        <p  className={'text_left custom-font-size-20 c-mb-24 font-400 connect-wallet-select-m'}>Select Wallet</p>
+        <FListItem display="flex" onClick={() => { 
+           dispatch(
+            setwalletStatus(false)
+             
+           );
+           dispatch(
+            setWalletAddress('')
+             
+         );
+          }} className={'whiteLabeledListItem c-mb-50 cursor_pointer'}>
+          <p className={'text_left custom-font-size-24 clr_black_new font-700'}>{isConnected?"Disconnect":"MetaMask" }</p>
           <span className="icon-wrap">
             <img src={IconMetaMask} alt={IconMetaMask}></img>
           </span>
         </FListItem>
-        <FListItem display="flex" onClick={() => { 
-            walletConnectClickEvent(); 
-            window.localStorage.removeItem('walletconnect')
-          }
-        } className={'whiteLabeledListItem c-mb-50 cursor_pointer'}>
+        <FListItem display="flex" className={'whiteLabeledListItem c-mb-50 cursor_pointer'}>
           <p className={'text_left custom-font-size-20 clr_black_new font-700'}>WalletConnects</p>
           <span className="icon-wrap">
             <img src={IconWalletConnect} alt={IconWalletConnect}></img>
@@ -46,3 +52,4 @@ export const ConnectWalletDialog = ({
     </FDialog>
   );
 };
+

@@ -20,7 +20,11 @@ const UserDashboard = ({ myClaims }: Props) => {
   const history = useHistory();
   const mainContractAddress = useSelector((state: RootState) => state.mainAppContract.mainContract);
   const tokenAddress: any = location.pathname.split("/").pop();
-  const { isConnected, walletAddress, networkClient,currentWalletNetwork, currentWallet } = useSelector((state: RootState) => state.walletConnector);
+  const { networkClient, currentWalletNetwork, currentWallet } = useSelector((state: RootState) => state.walletConnector);
+  const walletAddress  =
+  useSelector((state: RootState) => state.mainAppContract.accountWalletAddress);
+  const isConnected  =
+    useSelector((state: RootState) => state.mainAppContract.walletIsConnected);
   const [poolData, setPoolData] = useState<any>();
   const [offSet, setOffSet] = useState(0);
   const [dataLimit, setDataLimit] = useState(9);
