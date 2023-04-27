@@ -5,10 +5,6 @@ import localStorage from "redux-persist/es/storage";
 import { WalletConnector, WalletApplicationWrapper, WalletApproverWrapper, WalletSwap } from "foundry";
 import { applicationConfigSlice } from "./application-config/applicationConfigSlice";
 import { appContractSlice } from "./app-contract/appContractSlice";
-import { walletConnectorSlice } from "foundry/dist/container-components/wallet-connector/redux/walletConnectorSlice";
-import { connectWallet } from "foundry/dist/container-components/wallet-connector/redux/walletConnectorActions";
-import { createSlice } from "@reduxjs/toolkit";
-import { connectslice } from "../utils/connectWallet";
 
 const walletConnectorPersistConfig = {
   key: "walletConnector",
@@ -46,7 +42,6 @@ const rootReducer = combineReducers({
   walletSwapWrapper: WalletSwap.walletSwapperSlice.reducer,
   mainAppContract: persistReducer(appContractPersistConfig, appContractSlice.reducer),
   connect: persistReducer(walletPersisttConfig, appContractSlice.reducer),
-  connectwallet: persistReducer(walletPersisttConfig, connectslice.reducer),
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
