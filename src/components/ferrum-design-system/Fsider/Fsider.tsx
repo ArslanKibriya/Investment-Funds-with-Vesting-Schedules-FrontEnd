@@ -54,12 +54,11 @@ export const FSider = ({
 
   return (
     <div className={`f-sider-outer ${variant && `f-sider-outer-${variant}`}`}>
-      {variant && variant === 'whiteLabeled' ?
-        null
-        :
+      {variant && variant === "whiteLabeled" ? null : (
         <div
-          className={`desktop-aside-toggler btn btn-primary ${asideToggle ? "open" : ""
-            }`}
+          className={`desktop-aside-toggler btn btn-primary ${
+            asideToggle ? "open" : ""
+          }`}
           onClick={() => {
             setAsideToggler(!asideToggle);
             setFsilderLayoutState(!FsilderLayoutState);
@@ -69,14 +68,16 @@ export const FSider = ({
           <span></span>
           <span></span>
         </div>
-      }
+      )}
       <aside
-        className={`f-sider f-layout-component ${asideToggle ? "sider-expanded" : "sider-collapsed"
-          }`}
+        className={`f-sider f-layout-component ${
+          asideToggle ? "sider-expanded" : "sider-collapsed"
+        }`}
       >
         <div
-          className={`f-mobile mobile-aside-toggler ${asideToggle ? "open" : ""
-            }`}
+          className={`f-mobile mobile-aside-toggler ${
+            asideToggle ? "open" : ""
+          }`}
           onClick={() => setAsideToggler(!asideToggle)}
         >
           <span></span>
@@ -84,11 +85,18 @@ export const FSider = ({
           <span></span>
         </div>
         {showLogo === true && siderLogo && (
-          <div className="f-logo">
-            <img src={siderLogo} alt="Logo" />
+          <div style={{ fontSize: "25px" }} className="text-blue-lm f-pl-1">
+            <img
+              src="	https://app.team.finance/Blue_TF_Logotype.svg"
+              alt="Logo"
+            />
           </div>
         )}
-        <div className={`f-sider-items ${variant && `f-sider-items-${variant}`}`}>{children}</div>
+        <div
+          className={`f-sider-items ${variant && `f-sider-items-${variant}`}`}
+        >
+          {children}
+        </div>
       </aside>
     </div>
   );

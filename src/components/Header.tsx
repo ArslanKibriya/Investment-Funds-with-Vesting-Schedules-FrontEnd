@@ -17,11 +17,7 @@ import leftIcon from "../assets/img/back-arrow.svg";
 import { Link } from "react-router-dom";
 import { TruncateWithoutRounding } from "../utils/global.utils";
 import ferrumlogo from "../assets/img/ferrum-logo.svg";
-import {
-  smartContractAddress,
-  ferrumNetworkIdentifier,
-  allowedNetwork,
-} from "../utils/const.utils";
+import { smartContractAddress, allowedNetwork } from "../utils/const.utils";
 import Menu from "../assets/img/Menu.svg";
 import crossbtn from "../assets/img/crossbtn.svg";
 import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
@@ -107,13 +103,13 @@ export const Header = ({ myClaims, setMyClaims }: Props) => {
               <div
                 style={{ fontSize: "18px", fontWeight: 700, color: "#ffffff" }}
               >
-                Welcome to your Dashboard
+                {/* Welcome to your Dashboard */}
               </div>
             ) : currentRoute ===
               `/vesting/vesting-form/${mainContractAddress}` ? (
               <div className="f-mt-2 f-mb-2 d_flex justify_start align_center">
                 <Link
-                  to={`/dashboard/${mainContractAddress}?smartContractAddress=${smartContractAddress}&ferrumNetworkIdentifier=${ferrumNetworkIdentifier}`}
+                  to={`/dashboard/${mainContractAddress}?smartContractAddress=${smartContractAddress}`}
                 >
                   <div
                     className={
@@ -135,7 +131,7 @@ export const Header = ({ myClaims, setMyClaims }: Props) => {
               `/vesting/vesting-card/${mainContractAddress}` ? (
               <div className="f-mt-2 f-mb-2 d_flex justify_start align_center">
                 <Link
-                  to={`/dashboard/${mainContractAddress}?smartContractAddress=${smartContractAddress}&ferrumNetworkIdentifier=${ferrumNetworkIdentifier}`}
+                  to={`/dashboard/${mainContractAddress}?smartContractAddress=${smartContractAddress}`}
                 >
                   <div
                     className={
@@ -155,7 +151,7 @@ export const Header = ({ myClaims, setMyClaims }: Props) => {
           </div>
         </div>
       )}
-      <FGridItem alignX="end" alignY="center" size={[8, 8, 8]}>
+      <FGridItem alignX="end" alignY="center" size={[8, 8]}>
         {isConnected && (
           <>
             {userTogglermobile &&
@@ -228,7 +224,7 @@ export const Header = ({ myClaims, setMyClaims }: Props) => {
                   >
                     {TruncateWithoutRounding(WeiToEther(walletBalance), 3)}
                   </div>
-                  <div
+                  {/* <div
                     style={{
                       fontSize: "10px",
                       fontWeight: 700,
@@ -237,7 +233,7 @@ export const Header = ({ myClaims, setMyClaims }: Props) => {
                     className={"f-pl--2"}
                   >
                     {allowedNetwork.networkCurrencySymbol}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             )}
@@ -342,12 +338,14 @@ export const Header = ({ myClaims, setMyClaims }: Props) => {
           </>
         )}
         {userTogglermobile && (
-          <div
-            className="font-size-14 f-ml-1 btn btn-secondary"
+          <button
+            className="btn-white d-flex align-items-center f-pt--5 f-pb--5"
             onClick={() => setShow(true)}
           >
-            wallet
-          </div>
+            <span className="f-pl--8 f-pr--8 text-button-small">
+              Connect Wallet
+            </span>
+          </button>
         )}
         <ConnectWalletDialog show={show} setShow={setShow} />
       </FGridItem>

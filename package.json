@@ -20,6 +20,7 @@
     "@types/react-router-dom": "^5.3.2",
     "@types/react-select": "^5.0.1",
     "@types/styled-components": "^5.1.20",
+    "@walletconnect/client": "^1.8.0",
     "axios": "^0.24.0",
     "big.js": "^6.1.1",
     "bootstrap": "^5.2.1",
