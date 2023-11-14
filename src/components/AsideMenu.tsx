@@ -16,14 +16,14 @@ export const AsideMenu = () => {
       <div className="f-mt-3 sider">
         <div className="sider-dashboard">
           <FSiderItem
-            to={`/dashboard`}
+            to={`/`}
             title="Dashboard"
             prefix={<img src={dashboardIcon} alt={dashboardIcon} />}
             variant={"whiteLabeled"}
           />
         </div>
         <FSiderItem
-          to={`/`}
+          to={`/TokenVesting`}
           title="Token vesting"
           prefix={<img src={vestingIcon} alt={vestingIcon} />}
           variant={"whiteLabeled"}

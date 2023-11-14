@@ -11,6 +11,7 @@ import { WalletApplicationWrapper } from "foundry";
 import toast, { Toaster } from "react-hot-toast";
 import { AsideMenu, Header } from "../../components";
 import VestingContainer from "../vesting";
+import TokenVesting from "../vesting";
 
 const Lander = () => {
   const dispatch = useDispatch();
@@ -24,32 +25,47 @@ const Lander = () => {
       shouldInitializeCCTBProfile={false}
     >
       <>
-        <ApplicationUIProvider ApplicationUIContents={applicationContext}>
-          <FLayout themeBuilder={false}>
+        {location.pathname === "/" ? (
+          <ApplicationUIProvider ApplicationUIContents={applicationContext}>
+            <FLayout themeBuilder={false}>
+              <Toaster position="top-right" reverseOrder={false} />
+              <AsideMenu />
+
+              <FMain>
+                <Header />
+                <div>
+                  <FContainer type="fluid" className={"bg_img_chigi bg-pink"}>
+                    <Switch>
+                      <Route
+                        exact={true}
+                        path={`/`}
+                        component={() => <Dashboard />}
+                      />
+                    </Switch>
+                  </FContainer>
+                </div>
+              </FMain>
+            </FLayout>
+          </ApplicationUIProvider>
+        ) : (
+          <div>
             <Toaster position="top-right" reverseOrder={false} />
-            <AsideMenu />
 
             <FMain>
-              <Header />
               <div>
-                <FContainer type="fluid" className={"bg_img_chigi bg-pink"}>
+                <FContainer type="" className={""}>
                   <Switch>
                     <Route
                       exact={true}
-                      path={`/`}
-                      component={() => <Dashboard />}
-                    />
-                    <Route
-                      exact={true}
                       path={`/TokenVesting`}
-                      component={() => <VestingContainer />}
+                      component={() => <TokenVesting />}
                     />
                   </Switch>
                 </FContainer>
               </div>
             </FMain>
-          </FLayout>
-        </ApplicationUIProvider>
+          </div>
+        )}
       </>
     </WalletApplicationWrapper.ApplicationWrapper>
   );

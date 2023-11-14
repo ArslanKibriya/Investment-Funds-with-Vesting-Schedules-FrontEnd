@@ -375,8 +375,17 @@ border-radius: 0.375rem;
     }
   }
 }
-
-
+.header-line{
+  --tw-bg-opacity: 1;
+    background-color: rgb(243 244 246/var(--tw-bg-opacity));
+    width: 0.125rem;
+    height: 3rem;
+}
+.header-vertical-line{
+  --tw-border-opacity: 1;
+  border-color: rgb(229 229 229/var(--tw-border-opacity));
+  border-bottom-width: 1px;
+}
 
 @media screen and (max-width: 768px) {
 

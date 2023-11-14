@@ -1,6 +1,9 @@
 import React from "react";
 import { FGrid, FGridItem, FTypo } from "ferrum-design-system";
+import { Route, Switch, useHistory, useLocation } from "react-router";
 const VestingCards = () => {
+  const location = useLocation();
+  const history = useHistory();
   var commaAllocation = new Intl.NumberFormat();
   return (
     <>
@@ -40,7 +43,10 @@ const VestingCards = () => {
                 </p>
                 <div className="d-flex f-pt-1 align-items-center">
                   <div className="d-flex justify-content-center col-8">
-                    <button className="text-blue-lm text-button vesting-button f-pl-2 f-pr-2 f-pt--7 f-pb--7">
+                    <button
+                      onClick={() => history.push("/tokenvesting")}
+                      className="text-blue-lm text-button vesting-button f-pl-2 f-pr-2 f-pt--7 f-pb--7"
+                    >
                       Create Vesting
                     </button>
                   </div>

@@ -6,6 +6,7 @@ import * as AppActions from "./redux/app-contract/appContractActions";
 import { RootState } from "./redux/rootReducer";
 import { setSmartContractAddress } from "../src/utils/const.utils";
 import toast, { Toaster } from "react-hot-toast";
+import VestingContainer from "./pages/vesting";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function App() {
 
       <Switch>
         <Route path={`/`} component={Lander}></Route>
+        {/* <Route path={`/tokenVesting`} component={VestingContainer}></Route> */}
       </Switch>
     </>
   );
