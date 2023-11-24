@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import IconMetaMask from "../../assets/img/icon-metamask.svg";
-// import IconCoinbase from "../../assets/img/icon-coinbase.png";
 import IconWalletConnect from "../../assets/img/icon-wallet-connect.svg";
-// import { useApplicationUIContext } from "../../ApplicationUiContext";
-import { FCard, FItem, FList, FListItem } from "ferrum-design-system";
 import "./ConnectWalletDialog-styles.scss";
 import { FDialog } from "../ferrum-design-system/Fdialog/Fdialog";
 import {
@@ -27,51 +24,41 @@ export const ConnectWalletDialog = ({ show, setShow }: any) => {
   const [wcConnector, setWcConnector] = useState<WalletConnect | null>(null);
   const [accounts, setAccounts] = useState<string[]>([]);
   const [connected, setConnected] = useState(false);
-  useEffect(() => {
-    async function setupWalletConnect() {
-      if (!wcConnector) {
-        const connector = new WalletConnect({
-          bridge: "https://bridge.walletconnect.org",
-        });
-
-        if (connector.connected) {
-          setConnected(true);
-          setAccounts(connector.accounts);
-        }
-
-        connector.on("connect", (error, payload) => {
-          if (error) {
-            throw error;
-          }
-
-          setConnected(true);
-          setAccounts(payload.params[0].accounts);
-        });
-
-        connector.on("session_update", (error, payload) => {
-          if (error) {
-            throw error;
-          }
-
-          setAccounts(payload.params[0].accounts);
-        });
-
-        connector.on("disconnect", (error, payload) => {
-          if (error) {
-            throw error;
-          }
-
-          setConnected(false);
-          setAccounts([]);
-        });
-
-        setWcConnector(connector);
+  useEffect(() => {}, []);
+  async function setupWalletConnect() {
+    if (!wcConnector) {
+      const connector = new WalletConnect({
+        bridge:
+          "wss://z.bridge.walletconnect.org/?env=browser&host=localhost%3A3000&protocol=wc&version=1",
+      });
+      if (connector.connected) {
+        setConnected(true);
+        setAccounts(connector.accounts);
       }
+      connector.on("connect", (error, payload) => {
+        if (error) {
+          throw error;
+        }
+        setConnected(true);
+        console.log(connected, "connectWallettwo");
+        setAccounts(payload.params[0].accounts);
+      });
+      connector.on("session_update", (error, payload) => {
+        if (error) {
+          throw error;
+        }
+        setAccounts(payload.params[0].accounts);
+      });
+      connector.on("disconnect", (error, payload) => {
+        if (error) {
+          throw error;
+        }
+        setConnected(false);
+        setAccounts([]);
+      });
+      setWcConnector(connector);
     }
-
-    setupWalletConnect();
-  }, [wcConnector]);
-
+  }
   const connectWallettwo = async () => {
     if (wcConnector) {
       try {
@@ -83,6 +70,7 @@ export const ConnectWalletDialog = ({ show, setShow }: any) => {
   };
   async function connectWalletMetaMask() {
     const web3 = new Web3(window.ethereum);
+    console.log("hello");
     try {
       if (!window.ethereum) {
         alert("Please Install the wallet");
@@ -92,12 +80,40 @@ export const ConnectWalletDialog = ({ show, setShow }: any) => {
       // chainId = await web3.eth.getChainId()
       let isconnected = await window.ethereum.isConnected();
       if (isconnected) {
+        console.log(isconnected, "isconnected");
         dispatch(setwalletStatus(isconnected));
+        setConnected(true);
       }
     } catch (error) {
       console.log(error);
     }
   }
+  const handleDisconnect = async () => {
+    console.log("check");
+    if (window.ethereum) {
+      window.localStorage.clear();
+    }
+  };
+  console.log(isConnected, "outside");
+  const connectToCoinbaseWallet = async () => {
+    if (window.ethereum) {
+      try {
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        console.log("Connected to Coinbase Wallet");
+      } catch (e) {
+        console.error("Error connecting to Coinbase Wallet:");
+        if (e) {
+          console.log(
+            "Coinbase Wallet extension not detected. Please install it to connect."
+          );
+        }
+      }
+    } else {
+      console.log(
+        "No Ethereum provider found. Please install a wallet to connect."
+      );
+    }
+  };
   return (
     <Dialog open={show} onClose={onclose}>
       <div
@@ -109,7 +125,7 @@ export const ConnectWalletDialog = ({ show, setShow }: any) => {
         <DialogTitle>
           <div className="d-flex">
             <div
-              className="col-11 d-flex justify-content-center"
+              className="col-11 d-flex justify-content-start"
               style={{ fontSize: "16px", fontWeight: 700, color: "black" }}
             >
               Select a Wallet
@@ -136,7 +152,9 @@ export const ConnectWalletDialog = ({ show, setShow }: any) => {
           <div className="d-block justify-content-around">
             <div
               onClick={() => {
-                connectWalletMetaMask();
+                {
+                  handleDisconnect();
+                }
               }}
               className={" d-flex row cursor_pointer"}
               style={{ alignItems: "center" }}
@@ -165,11 +183,6 @@ export const ConnectWalletDialog = ({ show, setShow }: any) => {
               </div>
             </div>
             <div
-              onClick={() => {
-                connectWallettwo();
-                // dispatch(setwalletStatus(false));
-                // dispatch(setWalletAddress(""));
-              }}
               className={" d-flex f-pt-1 row cursor_pointer"}
               style={{ alignItems: "center" }}
             >
@@ -188,9 +201,7 @@ export const ConnectWalletDialog = ({ show, setShow }: any) => {
                     height={16}
                   ></img>
                 </div>
-                <div className="col-9">
-                  {isConnected ? "Disconnect" : "Wallet Connect"}
-                </div>
+                <div className="col-9">{"Wallet Connect"}</div>
                 <div>
                   <img
                     src="	https://app.team.finance/assets/wallet/qr-code-scan-icon.svg"
@@ -202,9 +213,7 @@ export const ConnectWalletDialog = ({ show, setShow }: any) => {
             </div>
             <div
               onClick={() => {
-                connectWallettwo();
-                // dispatch(setwalletStatus(false));
-                // dispatch(setWalletAddress(""));
+                // connectToCoinbaseWallet();
               }}
               className={" d-flex f-pt-1 row cursor_pointer"}
               style={{ alignItems: "center" }}
@@ -224,9 +233,7 @@ export const ConnectWalletDialog = ({ show, setShow }: any) => {
                     height={22}
                   ></img>
                 </div>
-                <div className="col-9">
-                  {isConnected ? "Disconnect" : "Coinbase Wallet"}
-                </div>
+                <div className="col-9">{"Coinbase Wallet"}</div>
                 <div>
                   <img
                     src="	https://app.team.finance/assets/wallet/qr-code-scan-icon.svg"

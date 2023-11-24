@@ -12,6 +12,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { AsideMenu, Header } from "../../components";
 import VestingContainer from "../vesting";
 import TokenVesting from "../vesting";
+import VestingForm from "../../components/vesting-information/vesting-forms";
 
 const Lander = () => {
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ const Lander = () => {
 
             <FMain>
               <div>
-                <FContainer type="" className={""}>
+                <FContainer type="" className={"g_img_chigi bg-pink"}>
                   <Switch>
                     <Route
                       exact={true}

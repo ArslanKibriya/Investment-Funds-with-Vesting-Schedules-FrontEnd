@@ -8,6 +8,8 @@ import {
   setWalletAddress,
   setwalletStatus,
 } from "../../redux/app-contract/appContractActions";
+import { WalletConnector } from "foundry";
+import { ConnectWalletDialog } from "../connect-wallet/ConnectWalletDialog";
 
 export const ConnectWalletDialogStart = ({
   show,
@@ -61,6 +63,15 @@ export const ConnectWalletDialogStart = ({
           </div>
         </div>
       </div>
+      <WalletConnector.WalletConnector
+        WalletConnectView={""}
+        WalletConnectModal={ConnectWalletDialog}
+        WalletConnectViewProps={{
+          className:
+            "mt-3 w-100 f-mb-4 custom-font-size-14 font-700 connect-button-hide", //hide the connect btn
+          variant: "whiteLabeled",
+        }}
+      />
     </div>
   );
 };

@@ -72,7 +72,7 @@ export const Header = ({ myClaims, setMyClaims }: Props) => {
   return (
     <FGrid
       className={
-        "w-100 bg-pink-header d_flex justify_between align_center header_layout ml_0 mr_0"
+        "w-100 bg-pink-header d_flex justify_between align_center header_layout ml_0 mr_0 header-bottom"
       }
     >
       {userTogglermobile && (
@@ -342,6 +342,13 @@ export const Header = ({ myClaims, setMyClaims }: Props) => {
             className="btn-white d-flex align-items-center f-pt--5 f-pb--5"
             onClick={() => setShow(true)}
           >
+            <span className="header-button">
+              <img
+                src="https://app.team.finance/icons/wizard/ethereum.svg"
+                alt=""
+                height={14}
+              />
+            </span>
             <span className="f-pl--8 f-pr--8 text-button-small">
               Connect Wallet
             </span>

@@ -85,12 +85,15 @@ export const FSider = ({
           <span></span>
         </div>
         {showLogo === true && siderLogo && (
-          <div style={{ fontSize: "25px" }} className="text-blue-lm f-pl-1">
-            <img
-              src="	https://app.team.finance/Blue_TF_Logotype.svg"
-              alt="Logo"
-            />
-          </div>
+          <>
+            <div style={{ fontSize: "25px" }} className="text-blue-lm   f-pl-1">
+              <img
+                src="	https://app.team.finance/Blue_TF_Logotype.svg"
+                alt="Logo"
+              />
+            </div>
+            <div className="sider-bottom"></div>
+          </>
         )}
         <div
           className={`f-sider-items ${variant && `f-sider-items-${variant}`}`}

@@ -17,10 +17,7 @@ const VestingForm = () => {
 
   return (
     <>
-      <Toaster position="top-right" reverseOrder={false} />
-      <FContainer type="fluid">
-        <FContainer></FContainer>
-      </FContainer>
+      <div style={{ color: "black" }}>ksdfhljmf</div>
     </>
   );
 };
